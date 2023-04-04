@@ -32,7 +32,11 @@ function App() {
 
   async function sendQuery(){
     var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
-    xmlhttp.open("POST", "http://164.92.237.219/model/getpalette/");
+    //xmlhttp.open("POST", "http://164.92.237.219/model/getpalette/");
+
+    // use when testing:
+    xmlhttp.open("POST", "http://127.0.0.1:8000/model/getpalette/");
+
     xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     var qInfo = '{"query" : "' + query + '"}';
     xmlhttp.onload  = function() {
@@ -47,6 +51,18 @@ function App() {
         pal[i] = rgbToHex(pal[i][0],pal[i][1],pal[i][2]);
       }
       updatePalette(pal);
+
+      // if logged in add the palette to history
+      if(sessionStorage.getItem('token') != null){
+        var xmlhttp2 = new XMLHttpRequest();
+        xmlhttp2.open("POST", "http://127.0.0.1:8000/account/addhistory/");
+        xmlhttp2.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xmlhttp2.setRequestHeader('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
+        var palInfo = '{"query":"' +  query + '", "color1": "' + pal[0]+ '", "color2": "'
+          + pal[1] + '", "color3": "' + pal[2] + '", "color4": "' + pal[3] + '", "color5": "' + pal[4] + '"}'
+        console.log(palInfo)
+          xmlhttp2.send(palInfo)
+      }
     };
     xmlhttp.send(qInfo)
 

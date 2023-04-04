@@ -38,6 +38,7 @@ def register(request, *args, **kwargs):
 def signin(request, *args, **kwargs):
     data=request.data
     user= DatabaseAPI.auth.sign_in_with_email_and_password(data.get('email'), data.get('password'))
+    print(user)
     user_token = user['idToken']
 
     return JsonResponse({"user_token": user_token})

@@ -15,6 +15,7 @@ class Solver(object):
     def __init__(self, args):
         self.args = args
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        
         # Build the model.
         self.build_model(args.mode)
 
@@ -357,7 +358,6 @@ class Solver(object):
 
         # Convert to tensor
         txt_embeddings = torch.LongTensor(txt_embeddings).to(self.device)
-
         # ==== END ====#
 
         # Compute text input size (without zero padding).
@@ -370,7 +370,6 @@ class Solver(object):
 
         # Generate multiple palettes from same text input.
         for num_gen in range(5):
-
             # Prepare input and output variables.
             palette = torch.FloatTensor(batch_size, 3).zero_().to(self.device)
             fake_palettes = torch.FloatTensor(batch_size, 15).zero_().to(self.device)
@@ -399,9 +398,8 @@ class Solver(object):
 
 
                 for k in range(5):
-                    lab = np.array([fake_palettes.data[x][3*k],
-                                    fake_palettes.data[x][3*k+1],
-                                    fake_palettes.data[x][3*k+2]], dtype='float64')
+                    # Should this be the solution?
+                    lab = np.array([fake_palettes.cpu().data[x][3*k],fake_palettes.cpu().data[x][3*k+1],fake_palettes.cpu().data[x][3*k+2]], dtype='float64')
                     rgb = lab2rgb_1d(lab)
                     
                     # Rescale from [0, 1] to [0, 255]

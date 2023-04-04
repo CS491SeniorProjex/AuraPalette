@@ -9,13 +9,19 @@ const Login = () => {
 
   function sendLoginInfo(){
     var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
-    xmlhttp.open("POST", "https://164.92.237.219/auth/signin/");
+    //xmlhttp.open("POST", "https://164.92.237.219/auth/signin/");
+
+    // use when testing:
+    xmlhttp.open("POST", "http://127.0.0.1:8000/auth/signin/");
+
     xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     var loginInfo = '{"email" : "' + email + '", "password" : "' + password + '"}';
     xmlhttp.onload  = function() {
       var jsonResponse = xmlhttp.response;
       jsonResponse = JSON.parse(jsonResponse)
-      localStorage.setItem('session',JSON.stringify(jsonResponse['user_token']))
+      //localStorage.setItem('session',JSON.stringify(jsonResponse['user_token']))
+      sessionStorage.setItem('token',JSON.stringify(jsonResponse['user_token']))
+      console.log(sessionStorage.getItem('token'))
     };
     xmlhttp.send(loginInfo)
   }

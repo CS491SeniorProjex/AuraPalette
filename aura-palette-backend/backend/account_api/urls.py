@@ -3,5 +3,5 @@ from . import views
 
 urlpatterns = [
     #path('history/<token>', views.history),
-    #path('signin/', views.signin),
+    path('addhistory/', views.create_history),
 ]
