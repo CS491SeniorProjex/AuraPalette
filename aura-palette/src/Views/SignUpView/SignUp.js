@@ -23,6 +23,7 @@ const SignUp = () => {
       console.log(localStorage.getItem('session'))
     };
     xmlhttp.send(registerInfo)
+    navigate("/")
   }
 
 

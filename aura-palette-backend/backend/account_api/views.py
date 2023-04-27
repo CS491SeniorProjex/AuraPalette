@@ -35,3 +35,31 @@ def create_history(request, *args, **kwargs):
 
 
     return Response({})
+
+@api_view(["POST"])
+def create_favorite(request, *args, **kwargs):
+    data=request.data
+    token = request.headers.get('Authorization')
+    token = token.partition(' ')[2]
+    token = token[1:-1]
+
+    info = DatabaseAPI.auth.get_account_info(token)
+    uid = info['users'][0]['localId']
+    print(uid)
+
+
+    new_palette = Palette()
+    new_palette.query = data.get('query')
+    new_palette.color1 = data.get('color1')
+    new_palette.color2 = data.get('color2')
+    new_palette.color3 = data.get('color3')
+    new_palette.color4 = data.get('color4')
+    new_palette.color5 = data.get('color5')
+
+    json_palette = json.loads(serializers.serialize('json', [ new_palette, ]))
+    json_palette = json_palette[0]
+    json_palette_info = json_palette['fields']
+    DatabaseAPI.db.child("users").child(uid).child("favorites").push(json_palette_info, token)
+
+
+    return Response({})

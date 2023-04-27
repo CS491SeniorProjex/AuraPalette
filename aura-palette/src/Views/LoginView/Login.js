@@ -24,6 +24,7 @@ const Login = () => {
       console.log(sessionStorage.getItem('token'))
     };
     xmlhttp.send(loginInfo)
+    navigate("/")
   }
 
   const navigate = useNavigate();
