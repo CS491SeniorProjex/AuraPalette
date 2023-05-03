@@ -17,6 +17,7 @@ export const NavBar = styled.div`
   align-items: center;
   position: fixed;
   top: 0;
+  z-index: 1;
 
   &.dark {
     background-color: #333;
@@ -25,6 +26,7 @@ export const NavBar = styled.div`
 `;
 
 export const GradientLine = styled.div`
+    z-index: 1;
   background: linear-gradient(
     90deg,
     ${(props) => props.colorList[0]} 0%,

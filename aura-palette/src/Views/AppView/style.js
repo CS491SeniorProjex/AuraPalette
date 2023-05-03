@@ -14,6 +14,7 @@ export const AppBackground = styled.div`
 
 export const Content = styled.div`
   background-color: #eeeeee;
+  overflow-y: auto;
   font-family: Helvetica Neue;
   display: flex;
   flex-direction: column;
@@ -35,6 +36,7 @@ export const Container = styled.div`
 `;
 
 export const GradientLine = styled.div`
+    z-index: 1;
   background: linear-gradient(
     90deg,
     ${(props) => props.colorList[0]} 0%,

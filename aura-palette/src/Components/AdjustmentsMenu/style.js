@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 export const MenuContainer = styled.div`
   width: 20%;
-  //margin-top: 18px;
   margin-left: 4%;
   margin-right: 20px;
   color: #333333;
@@ -12,7 +11,7 @@ export const MenuContainer = styled.div`
   background-color: #dddddd;
   border-radius: 8px;
   padding: 20px;
-  height: calc(100vh - 298px);
+  height: calc(100vh - 200px);
 
   &.dark {
     background-color: #333;

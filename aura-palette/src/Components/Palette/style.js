@@ -11,7 +11,6 @@ export const Container = styled.div`
   width: 80%;
   margin-right: 4%;
   height: calc(100vh - 260px);
-  overflow: auto;
 
   @media screen and (max-width: 900px) {
     width: 90%;
@@ -25,9 +24,7 @@ export const Container = styled.div`
 `;
 
 export const InnerContainer = styled.div`
-  height: calc(100vh - 230px);
-  overflow-x: hidden;
-  overflow-y: auto;
+  height: calc(100vh - 230px)
 
 `;
 
