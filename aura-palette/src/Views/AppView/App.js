@@ -47,6 +47,7 @@ function App({ DarkMode, setIsDarkMode }) {
   const [medium, setMedium] = useState("Default");
   const [adjustmentsEnabled, setAdjustmentsEnabled] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
 
   function showAdjustments() {
@@ -57,6 +58,7 @@ function App({ DarkMode, setIsDarkMode }) {
   }
 
   async function sendQuery(){
+    setIsError(false);
     setLoading(true);
     var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
 
@@ -66,8 +68,13 @@ function App({ DarkMode, setIsDarkMode }) {
 
     xmlhttp.onload  = function() {
       var jsonResponse = xmlhttp.response;
-      console.log(jsonResponse);
-      jsonResponse = JSON.parse(jsonResponse);
+      try {
+        jsonResponse = JSON.parse(jsonResponse);
+      } catch (error) {
+        console.log("Error parsing JSON response:", error);
+        setIsError(true);
+        return setLoading(false);
+      }
       var colorResponse = jsonResponse['samples'];
 
       var no = Math.floor(Math.random() * 5);
@@ -267,6 +274,7 @@ function App({ DarkMode, setIsDarkMode }) {
 
           <S.Title className = {DarkMode}>{title}</S.Title>
 
+          {isError && <p>Please try another word...</p>}
           <S.SearchBar className = {DarkMode} placeholder="Enter some keywords and AI will generate a palette..." onChange={(e) => setQuery(e.target.value)} onKeyDown={handleKeyDown} colorList={palette.palette}></S.SearchBar>
           <S.Search className = {DarkMode}>
             <SearchIcon />
