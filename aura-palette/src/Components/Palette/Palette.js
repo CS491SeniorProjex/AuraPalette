@@ -96,8 +96,8 @@ export const Palette = ({ palette, lock, setLock, setHarmony, harmony, setEdited
         var xmlhttp = new XMLHttpRequest();
         var token_to_check;
         var loggedIn = false;
-        //xmlhttp.open("GET", "https://may22-vhxzdlegrq-ew.a.run.app/account/checktoken/");
-        xmlhttp.open("GET", "http://127.0.0.1:8000/account/checktoken/");
+        xmlhttp.open("GET", "https://may22-vhxzdlegrq-ew.a.run.app/account/checktoken/");
+        //xmlhttp.open("GET", "http://127.0.0.1:8000/account/checktoken/");
         xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xmlhttp.setRequestHeader('Authorization', 'Bearer ' + sessionStorage.getItem('user_token'));
         xmlhttp.onload  = function() {
@@ -105,9 +105,10 @@ export const Palette = ({ palette, lock, setLock, setHarmony, harmony, setEdited
           jsonResponse = JSON.parse(jsonResponse);
           token_to_check = JSON.stringify(jsonResponse['user_token']);
           if(token_to_check === sessionStorage.getItem('user_token')){
+            setLoggedIn(true);
             // user is logged in
             addToFavorites();
-            setLoggedIn(true);
+            
           }
           else{
             // REPLACE THIS
